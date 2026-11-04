@@ -1,6 +1,6 @@
-use clap::{Parser};
-use std::path::PathBuf;
+use clap::Parser;
 use std::fs;
+use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
 #[command(
@@ -27,17 +27,16 @@ fn main() {
     let human_readable = args.human_readable;
     // let max_depth = args.max_depth;
     let mut single_file_size: u64 = 0;
-    
+
     if check_is_file(&path) {
         match get_file_size(path.clone()) {
             Ok(size) => single_file_size = size,
-            Err(err) => eprintln!("Error occured: {}", err)
+            Err(err) => eprintln!("Error occured: {}", err),
         }
         show_single_file_size(path, single_file_size, human_readable);
     } else {
         println!("Fuck no")
     }
-
 }
 
 fn check_is_file(path: &PathBuf) -> bool {
@@ -53,6 +52,10 @@ fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
 }
 
 fn show_single_file_size(path: PathBuf, size: u64, is_human_readable: bool) {
+    let file_name = path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("unknown");
     if is_human_readable {
         const UNITS: [&str; 6] = ["B", "KiB", "MiB", "GiB", "TiB", "PiB"];
 
@@ -70,8 +73,8 @@ fn show_single_file_size(path: PathBuf, size: u64, is_human_readable: bool) {
             format!("{:.1} {}", value, UNITS[index])
         };
 
-        println!("File {} size is {}", path.display(), formatted);
+        println!("File {} size is {}", file_name, formatted);
     } else {
-        println!("File {} size is {} bytes", path.display(), size);
+        println!("File {} size is {} bytes", file_name, size);
     }
 }
