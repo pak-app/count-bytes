@@ -1,15 +1,24 @@
-
-use std::path::PathBuf;
+use crate::cli::Args;
+use crate::ui;
 use std::fs;
+use std::path::PathBuf;
 
-pub fn check_is_file(path: &PathBuf) -> bool {
-    if path.is_dir() {
-        return false;
-    } else {
-        return true;
-    }
+
+fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
+    Ok(fs::metadata(path)?.len())
 }
 
-pub fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
-    Ok(fs::metadata(path)?.len())
+pub fn process(args: Args) {
+    let path = args.path.clone();
+    let human_readable = args.human_readable;
+    // let max_depth = args.max_depth;
+    // tree_view = args.tree_view;
+    // dir_only = args.show_files;
+    let mut single_file_size: u64 = 0;
+
+    match get_file_size(path.clone()) {
+        Ok(size) => single_file_size = size,
+        Err(err) => eprintln!("Error occured: {}", err),
+    }
+    ui::show_single_file_size(path, single_file_size, human_readable);
 }
