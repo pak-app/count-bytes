@@ -11,9 +11,7 @@ fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
 pub fn process(args: Args) {
     let path = args.path.clone();
     let human_readable = args.human_readable;
-    // let max_depth = args.max_depth;
-    // tree_view = args.tree_view;
-    // dir_only = args.show_files;
+
     let mut single_file_size: u64 = 0;
 
     match get_file_size(path.clone()) {

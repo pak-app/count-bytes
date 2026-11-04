@@ -11,7 +11,7 @@ fn main() {
     let path = &args.path;
 
     if check_is_file(&path) {
-        files::process(args);
+        files::process(args)
     } else {
         println!("Fuck no")
     }
