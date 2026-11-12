@@ -4,7 +4,7 @@ use std::fs;
 use std::path::PathBuf;
 
 
-fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
+pub fn get_file_size(path: PathBuf) -> std::io::Result<u64> {
     Ok(fs::metadata(path)?.len())
 }
 

@@ -22,9 +22,9 @@ pub struct Args {
 
     /// Show files sizes too inside directories
     #[arg(long)]
-    show_files: bool,
+    pub show_files: bool,
 
     /// Show sizes in tree view (only for directories)
     #[arg(short = 't', long)]
-    tree_view: bool,
+    pub tree_view: bool,
 }

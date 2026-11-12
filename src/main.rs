@@ -1,18 +1,18 @@
 mod cli;
 mod files;
 mod ui;
-mod utils;
-use utils::check_is_file;
+mod directory;
 use clap::Parser;
+
 
 fn main() {
     let args = cli::Args::parse();
 
     let path = &args.path;
 
-    if check_is_file(&path) {
+    if path.is_file() {
         files::process(args)
     } else {
-        println!("Fuck no")
+        directory::process(args)
     }
 }
